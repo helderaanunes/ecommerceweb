@@ -8,6 +8,7 @@ import {
   cilDescription,
   cilDrop,
   cilNotes,
+  cilObjectGroup,
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
@@ -131,7 +132,25 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Buttons',
+    name: 'Categoria ',
+    to: '/categoria',
+    icon: <CIcon icon={cilObjectGroup} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/categoria/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/categoria/list',
+      }
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Buttons ',
     to: '/buttons',
     icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
     items: [
