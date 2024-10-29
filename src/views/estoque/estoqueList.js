@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   CCard,
   CCardBody,
@@ -12,51 +12,51 @@ import {
   CTableHeaderCell,
   CTableRow,
   CButton,
-} from '@coreui/react';
-import { cilPencil, cilTrash } from '@coreui/icons';
-import CIcon from '@coreui/icons-react';
+} from '@coreui/react'
+import { cilPencil, cilTrash } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 
-const CategoriaList = () => {
-  const [categorias, setCategorias] = useState([]);
-  const [loading, setLoading] = useState(true);
+const EstoqueList = () => {
+  const [estoque, setEstoque] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchEstoque = async () => {
       try {
-        const response = await fetch('http://localhost:8080/categoria');
-        const data = await response.json();
-        setCategorias(data);
+        const response = await fetch('http://localhost:8080/categoria')
+        const data = await response.json()
+        setEstoque(data)
       } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
+        console.error('Erro ao busca:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchCategorias();
-  }, []);
+    fetchEstoque()
+  }, [])
 
   const handleEdit = (id) => {
     // Lógica para editar a categoria
-    console.log('Editando categoria com id:', id);
-  };
+    console.log('Editando estoque com id:', id)
+  }
 
   const handleDelete = async (id) => {
-    if (window.confirm('Você tem certeza que deseja remover esta categoria?')) {
+    if (window.confirm('Você tem certeza que deseja remover este produto?')) {
       try {
         await fetch(`http://localhost:8080/categoria/${id}`, {
           method: 'DELETE',
-        });
+        })
         // Atualizar o estado para remover a categoria
-        setCategorias((prevCategorias) => prevCategorias.filter((categoria) => categoria.id !== id));
+        setEstoque((prevEstoque) => prevEstoque.filter((estoque) => estoque.id !== id))
       } catch (error) {
-        console.error('Erro ao remover categoria:', error);
+        console.error('Erro ao remover:', error)
       }
     }
-  };
+  }
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return <div>Carregando...</div>
   }
 
   return (
@@ -64,7 +64,7 @@ const CategoriaList = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Categorias</strong>
+            <strong>Estoque</strong>
           </CCardHeader>
           <CCardBody>
             <CTable hover>
@@ -72,22 +72,22 @@ const CategoriaList = () => {
                 <CTableRow>
                   <CTableHeaderCell scope="col">ID</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Nome</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Categoria Pai</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Estoque</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Ações</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {categorias.map((categoria) => (
-                  <CTableRow key={categoria.id}>
-                    <CTableHeaderCell scope="row">{categoria.id}</CTableHeaderCell>
-                    <CTableDataCell>{categoria.nome}</CTableDataCell>
+                {estoque.map((estoque) => (
+                  <CTableRow key={estoque.id}>
+                    <CTableHeaderCell scope="row">{estoque.id}</CTableHeaderCell>
+                    <CTableDataCell>{estoque.nome}</CTableDataCell>
                     <CTableDataCell>
-                      {categoria.categoria ? categoria.categoria.nome : 'N/A'}
+                      {estoque.estoque ? estoque.estoque.nome : 'N/A'}
                     </CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         color="warning"
-                        onClick={() => handleEdit(categoria.id)}
+                        onClick={() => handleEdit(estoque.id)}
                         className="me-2"
                         style={{ color: 'white' }}
                       >
@@ -95,7 +95,7 @@ const CategoriaList = () => {
                       </CButton>
                       <CButton
                         color="danger"
-                        onClick={() => handleDelete(categoria.id)}
+                        onClick={() => handleDelete(estoque.id)}
                         style={{ color: 'white' }}
                       >
                         <CIcon icon={cilTrash} /> Remover
@@ -109,7 +109,7 @@ const CategoriaList = () => {
         </CCard>
       </CCol>
     </CRow>
-  );
-};
+  )
+}
 
-export default CategoriaList;
+export default EstoqueList
