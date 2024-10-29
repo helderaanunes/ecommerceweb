@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   CCard,
   CCardBody,
@@ -28,6 +29,10 @@ const CategoriaList = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
 
+  const navigate = useNavigate();
+
+  
+
   const fetchCategorias = async () => {
     try {
       const response = await api.get('/categoria');
@@ -46,7 +51,7 @@ const CategoriaList = () => {
   }, []);
 
   const handleEdit = (id) => {
-    console.log('Editando categoria com id:', id);
+    navigate(`/categoria/add?id=${id}`);
   };
 
   const handleConfirmDelete = (categoria) => {

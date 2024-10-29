@@ -14,12 +14,17 @@ import {
   CFormSelect,
 } from '@coreui/react';
 import api from '../../services/axiosConfig';
+import { useLocation } from 'react-router-dom';
 
 const CategoriaAdd = () => {
   const [nome, setNome] = useState('');
   const [categorias, setCategorias] = useState([]);
   const [categoriaPai, setCategoriaPai] = useState(''); // Estado para categoria pai
   const [modalVisible, setModalVisible] = useState(false);
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const categoriaId = searchParams.get('id');
 
   useEffect(() => {
     // Busca todas as categorias para popular o select
@@ -34,20 +39,46 @@ const CategoriaAdd = () => {
     fetchCategorias();
   }, []);
 
+
+  useEffect(() => {
+    if (categoriaId) {
+      const fetchCategoria = async () => {
+        try {
+          const response = await api.get(`/categoria/${categoriaId}`);
+          const { nome, categoria } = response.data;
+          setNome(nome);
+          setCategoriaPai(categoria ? categoria.id : '');
+        } catch (error) {
+          console.error("Erro ao carregar categoria:", error);
+        }
+      };
+      fetchCategoria();
+    }
+  }, [categoriaId]);
+
+
   const handleSave = async (e) => {
     e.preventDefault();
+
+    const categoriaData = { nome, categoria: categoriaPai ? { id: categoriaPai } : null };
+    
     try {
-      const response = await api.post('/categoria', { nome, categoria: { id: categoriaPai } });
-      if (response.status === 201) {
-        setModalVisible(true);
-        setNome('');
-        setCategoriaPai('');
+      if (categoriaId) {
+        // Editar categoria existente
+        await api.put(`/categoria/${categoriaId}`, categoriaData);
+      } else {
+        // Adicionar nova categoria
+        await api.post('/categoria', categoriaData);
       }
+      setModalVisible(true);
+      setNome('');
+      setCategoriaPai('');
     } catch (error) {
       console.error("Erro ao salvar a categoria:", error);
       alert('Erro ao salvar a categoria');
     }
   };
+
 
   return (
     <>
