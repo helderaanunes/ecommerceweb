@@ -12,43 +12,56 @@ import {
   CTableHeaderCell,
   CTableRow,
   CButton,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
 } from '@coreui/react';
 import { cilPencil, cilTrash } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
+import api from '../../services/axiosConfig';
 
 const CategoriaList = () => {
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
+
+  const fetchCategorias = async () => {
+    try {
+      const response = await api.get('/categoria');
+      const data = Array.isArray(response.data) ? response.data : [];
+      setCategorias(data);
+    } catch (error) {
+      console.error('Erro ao buscar categorias:', error);
+      setCategorias([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCategorias = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/categoria');
-        const data = await response.json();
-        setCategorias(data);
-      } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCategorias();
   }, []);
 
   const handleEdit = (id) => {
-    // Lógica para editar a categoria
     console.log('Editando categoria com id:', id);
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Você tem certeza que deseja remover esta categoria?')) {
+  const handleConfirmDelete = (categoria) => {
+    setCategoriaSelecionada(categoria);
+    setModalVisible(true);
+  };
+
+  const handleDelete = async () => {
+    if (categoriaSelecionada) {
       try {
-        await fetch(`http://localhost:8080/categoria/${id}`, {
-          method: 'DELETE',
-        });
-        // Atualizar o estado para remover a categoria
-        setCategorias((prevCategorias) => prevCategorias.filter((categoria) => categoria.id !== id));
+        await api.delete(`/categoria/${categoriaSelecionada.id}`);
+        setModalVisible(false);
+        setCategoriaSelecionada(null);
+        // Recarregar todas as categorias para garantir que a tabela esteja atualizada
+        fetchCategorias();
       } catch (error) {
         console.error('Erro ao remover categoria:', error);
       }
@@ -95,7 +108,7 @@ const CategoriaList = () => {
                       </CButton>
                       <CButton
                         color="danger"
-                        onClick={() => handleDelete(categoria.id)}
+                        onClick={() => handleConfirmDelete(categoria)}
                         style={{ color: 'white' }}
                       >
                         <CIcon icon={cilTrash} /> Remover
@@ -108,6 +121,24 @@ const CategoriaList = () => {
           </CCardBody>
         </CCard>
       </CCol>
+
+      {/* Modal de Confirmação de Exclusão */}
+      <CModal visible={modalVisible} onClose={() => setModalVisible(false)}>
+        <CModalHeader>
+          <CModalTitle>Confirmar Exclusão</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          Tem certeza de que deseja remover a categoria "<strong>{categoriaSelecionada?.nome}</strong>"?
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setModalVisible(false)}>
+            Cancelar
+          </CButton>
+          <CButton color="danger" onClick={handleDelete}>
+            Confirmar
+          </CButton>
+        </CModalFooter>
+      </CModal>
     </CRow>
   );
 };
