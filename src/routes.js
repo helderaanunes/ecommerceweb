@@ -53,12 +53,99 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 const CategoriaList = React.lazy(() => import('./views/categoria/CategoriaList'))
 const CategoriaAdd = React.lazy(() => import('./views/categoria/CategoriaAdd'))
-const EstoqueList = React.lazy(()=> import('./views/estoque/EstoqueList'))
+const ProdutoList = React.lazy(() => import('./views/produto/ProdutoList'))
+const ProdutoAdd = React.lazy(() => import('./views/produto/ProdutoAdd'))
+const ClienteList = React.lazy(() => import('./views/cliente/ClienteList'))
+const ClienteAdd = React.lazy(() => import('./views/cliente/ClienteAdd'))
+const VendaList = React.lazy(() => import('./views/venda/VendaList'))
+const VendaAdd = React.lazy(() => import('./views/venda/VendaAdd'))
+const EnderecoList = React.lazy(() => import('./views/endereco/EnderecoList'))
+const EnderecoAdd = React.lazy(() => import('./views/endereco/EnderecoAdd'))
+const EstoqueList = React.lazy(() => import('./views/estoque/EstoqueList'))
+const EstoqueAdd = React.lazy(() => import('./views/estoque/EstoqueAdd'))
+const ProdutoFornecedorList = React.lazy(() => import('./views/produtoFornecedor/ProdutoFornecedorList'))
+const ProdutoFornecedorAdd = React.lazy(() => import('./views/produtoFornecedor/ProdutoFornecedorAdd'))
+const FornecedorList = React.lazy(() => import('./views/fornecedor/FornecedorList'))
+const FornecedorAdd = React.lazy(() => import('./views/fornecedor/FornecedorAdd'))
+const UsuarioList = React.lazy(() => import('./views/usuario/UsuarioList'))
+const UsuarioAdd = React.lazy(() => import('./views/usuario/UsuarioAdd'))
+const PermissaoList = React.lazy(() => import('./views/permissao/PermissaoList'))
+const PermissaoAdd = React.lazy(() => import('./views/permissao/PermissaoAdd'))
+const CartaoList = React.lazy(() => import('./views/cartao/CartaoList'))
+const CartaoAdd = React.lazy(() => import('./views/cartao/CartaoAdd'))
+const CarrinhoProdutoList = React.lazy(() => import('./views/carrinhoProduto/CarrinhoProdutoList'))
+const CarrinhoProdutoAdd = React.lazy(() => import('./views/carrinhoProduto/CarrinhoProdutoAdd'))
+const TransportadoraList = React.lazy(() => import('./views/transportadora/TransportadoraList'))
+const TransportadoraAdd = React.lazy(() => import('./views/transportadora/TransportadoraAdd'))
+const ProdutoEstoqueList = React.lazy(() => import('./views/produtoEstoque/ProdutoEstoqueList'))
+const ProdutoEstoqueAdd = React.lazy(() => import('./views/produtoEstoque/ProdutoEstoqueAdd'))
+const PromocaoList = React.lazy(() => import('./views/promocao/PromocaoList'))
+const PromocaoAdd = React.lazy(() => import('./views/promocao/PromocaoAdd'))
+const ListaDesejoList = React.lazy(() => import('./views/listaDesejo/ListaDesejoList'))
+const ListaDesejoAdd = React.lazy(() => import('./views/listaDesejo/ListaDesejoAdd'))
+const ImagemProdutoList = React.lazy(() => import('./views/imagemProduto/ImagemProdutoList'))
+const ImagemProdutoAdd = React.lazy(() => import('./views/imagemProduto/ImagemProdutoAdd'))
+const ItemVendaList = React.lazy(() => import('./views/itemVenda/ItemVendaList'))
+const ItemVendaAdd = React.lazy(() => import('./views/itemVenda/ItemVendaAdd'))
+const FluxoFinanceiroList = React.lazy(() => import('./views/fluxoFinanceiro/FluxoFinanceiroList'))
+const FluxoFinanceiroAdd = React.lazy(() => import('./views/fluxoFinanceiro/FluxoFinanceiroAdd'))
+const DevolucaoList = React.lazy(() => import('./views/devolucao/DevolucaoList'))
+const DevolucaoAdd = React.lazy(() => import('./views/devolucao/DevolucaoAdd'))
+const AvaliacaoProdutoList = React.lazy(() => import('./views/avaliacaoProduto/AvaliacaoProdutoList'))
+const AvaliacaoProdutoAdd = React.lazy(() => import('./views/avaliacaoProduto/AvaliacaoProdutoAdd'))
+const EntregaList = React.lazy(() => import('./views/entrega/EntregaList'))
+const EntregaAdd = React.lazy(() => import('./views/entrega/EntregaAdd'))
+const HistoricoEntregaList = React.lazy(() => import('./views/historicoEntrega/HistoricoEntregaList'))
+const HistoricoEntregaAdd = React.lazy(() => import('./views/historicoEntrega/HistoricoEntregaAdd'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/categoria/list', name: 'Categoria Listar', element: CategoriaList },
   { path: '/categoria/add', name: 'Categoria Adicionar', element: CategoriaAdd },
+  { path: '/produto/list', name: 'Produto Listar', element: ProdutoList },
+  { path: '/produto/add', name: 'Produto Adicionar', element: ProdutoAdd },
+  { path: '/cliente/list', name: 'Cliente Listar', element: ClienteList },
+  { path: '/cliente/add', name: 'Cliente Adicionar', element: ClienteAdd },
+  { path: '/venda/list', name: 'Venda Listar', element: VendaList },
+  { path: '/venda/add', name: 'Venda Adicionar', element: VendaAdd },
+  { path: '/endereco/list', name: 'Endereço Listar', element: EnderecoList },
+  { path: '/endereco/add', name: 'Endereço Adicionar', element: EnderecoAdd },
   { path: '/estoque/list', name: 'Estoque Listar', element: EstoqueList },
+  { path: '/estoque/add', name: 'Estoque Adicionar', element: EstoqueAdd },
+  { path: '/produtoFornecedor/list', name: 'Produto Fornecedor Listar', element: ProdutoFornecedorList },
+  { path: '/produtoFornecedor/add', name: 'Produto Fornecedor Adicionar', element: ProdutoFornecedorAdd },
+  { path: '/fornecedor/list', name: 'Fornecedor Listar', element: FornecedorList },
+  { path: '/fornecedor/add', name: 'Fornecedor Adicionar', element: FornecedorAdd },
+  { path: '/usuario/list', name: 'Usuário Listar', element: UsuarioList },
+  { path: '/usuario/add', name: 'Usuário Adicionar', element: UsuarioAdd },
+  { path: '/permissao/list', name: 'Permissão Listar', element: PermissaoList },
+  { path: '/permissao/add', name: 'Permissão Adicionar', element: PermissaoAdd },
+  { path: '/cartao/list', name: 'Cartão Listar', element: CartaoList },
+  { path: '/cartao/add', name: 'Cartão Adicionar', element: CartaoAdd },
+  { path: '/carrinhoProduto/list', name: 'Carrinho Produto Listar', element: CarrinhoProdutoList },
+  { path: '/carrinhoProduto/add', name: 'Carrinho Produto Adicionar', element: CarrinhoProdutoAdd },
+  { path: '/transportadora/list', name: 'Transportadora Listar', element: TransportadoraList },
+  { path: '/transportadora/add', name: 'Transportadora Adicionar', element: TransportadoraAdd },
+  { path: '/produtoEstoque/list', name: 'Produto Estoque Listar', element: ProdutoEstoqueList },
+  { path: '/produtoEstoque/add', name: 'Produto Estoque Adicionar', element: ProdutoEstoqueAdd },
+  { path: '/promocao/list', name: 'Promoção Listar', element: PromocaoList },
+  { path: '/promocao/add', name: 'Promoção Adicionar', element: PromocaoAdd },
+  { path: '/listaDesejo/list', name: 'Lista de Desejo Listar', element: ListaDesejoList },
+  { path: '/listaDesejo/add', name: 'Lista de Desejo Adicionar', element: ListaDesejoAdd },
+  { path: '/imagemProduto/list', name: 'Imagem Produto Listar', element: ImagemProdutoList },
+  { path: '/imagemProduto/add', name: 'Imagem Produto Adicionar', element: ImagemProdutoAdd },
+  { path: '/itemVenda/list', name: 'Item Venda Listar', element: ItemVendaList },
+  { path: '/itemVenda/add', name: 'Item Venda Adicionar', element: ItemVendaAdd },
+  { path: '/fluxoFinanceiro/list', name: 'Fluxo Financeiro Listar', element: FluxoFinanceiroList },
+  { path: '/fluxoFinanceiro/add', name: 'Fluxo Financeiro Adicionar', element: FluxoFinanceiroAdd },
+  { path: '/devolucao/list', name: 'Devolução Listar', element: DevolucaoList },
+  { path: '/devolucao/add', name: 'Devolução Adicionar', element: DevolucaoAdd },
+  { path: '/avaliacaoProduto/list', name: 'Avaliação Produto Listar', element: AvaliacaoProdutoList },
+  { path: '/avaliacaoProduto/add', name: 'Avaliação Produto Adicionar', element: AvaliacaoProdutoAdd },
+  { path: '/entrega/list', name: 'Entrega Listar', element: EntregaList },
+  { path: '/entrega/add', name: 'Entrega Adicionar', element: EntregaAdd },
+  { path: '/historicoEntrega/list', name: 'Histórico Entrega Listar', element: HistoricoEntregaList },
+  { path: '/historicoEntrega/add', name: 'Histórico Entrega Adicionar', element: HistoricoEntregaAdd },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
