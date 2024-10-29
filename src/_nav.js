@@ -150,6 +150,26 @@ const _nav = [
   },
   {
     component: CNavGroup,
+    name: 'Buttons',
+    name: 'Estoque',
+    to: '/estoque',
+    icon: <CIcon icon={cilObjectGroup} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/estoque/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/estoque/list',
+      }
+    ],
+  },
+
+  {
+    component: CNavGroup,
     name: 'Buttons ',
     to: '/buttons',
     icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
