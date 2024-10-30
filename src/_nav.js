@@ -1,18 +1,32 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
+  cilAccountLogout,
+  cilAddressBook,
   cilBell,
+  cilBriefcase,
   cilCalculator,
+  cilCart,
+  cilChartLine,
   cilChartPie,
+  cilCheckCircle,
+  cilCreditCard,
   cilCursor,
   cilDescription,
+  cilDollar,
   cilDrop,
+  cilGift,
+  cilInbox,
   cilNotes,
   cilObjectGroup,
   cilPencil,
+  cilPeople,
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilTransfer,
+  cilTruck,
+  cilUser,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -148,12 +162,11 @@ const _nav = [
       }
     ],
   },
-  {
+  { 
     component: CNavGroup,
-    name: 'Buttons',
     name: 'Estoque',
     to: '/estoque',
-    icon: <CIcon icon={cilObjectGroup} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilInbox} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -165,6 +178,301 @@ const _nav = [
         name: 'Listar',
         to: '/estoque/list',
       }
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Cliente',
+    to: '/cliente',
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/cliente/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/cliente/list',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Produto',
+    to: '/produto',
+    icon: <CIcon icon={cilCart} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/produto/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/produto/list',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Fornecedor',
+    to: '/fornecedor',
+    icon: <CIcon icon={cilBriefcase} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/fornecedor/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/fornecedor/list',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Venda',
+    to: '/venda',
+    icon: <CIcon icon={cilDollar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/venda/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/venda/list',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Entrega',
+    to: '/entrega',
+    icon: <CIcon icon={cilTruck} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/entrega/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/entrega/list',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Cartão',
+    to: '/cartao',
+    icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/cartao/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/cartao/list',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Lista de Desejos',
+    to: '/listadesejo',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/listadesejo/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/listadesejo/list',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Promoção',
+    to: '/promocao',
+    icon: <CIcon icon={cilGift} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/promocao/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/promocao/list',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Devolução',
+    to: '/devolucao',
+    icon: <CIcon icon={cilAccountLogout} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/devolucao/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/devolucao/list',
+      },
+    ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'Avaliação do Produto',
+    to: '/avalicaoProduto',
+    icon: <CIcon icon={cilCheckCircle} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/avalicaoProduto/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/avalicaoProduto/list',
+      },
+    ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'Fluxo Financeiro',
+    to: '/fluxoFinanceiro',
+    icon: <CIcon icon={cilChartLine} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/fluxoFinanceiro/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/fluxoFinanceiro/list',
+      },
+    ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'Histórico de Entrega',
+    to: '/historicoEntrega',
+    icon: <CIcon icon={cilTruck} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/historicoEntrega/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/historicoEntrega/list',
+      },
+    ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'Transportadora',
+    to: '/transportadora',
+    icon: <CIcon icon={cilTransfer} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/transportadora/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/transportadora/list',
+      },
+    ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'Endereço',
+    to: '/endereco',
+    icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/endereco/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/endereco/list',
+      },
+    ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'Usuário',
+    to: '/usuario',
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/usuario/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/usuairo/list',
+      },
+    ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'Carrinho',
+    to: '/carrinhoProduto',
+    icon: <CIcon icon={cilCart} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Adicionar',
+        to: '/carrinhoProduto/add',
+      },
+      {
+        component: CNavItem,
+        name: 'Listar',
+        to: '/carrinhoProduto/list',
+      },
     ],
   },
 
