@@ -77,7 +77,7 @@ const CategoriaAdd = () => {
       console.error("Erro ao salvar a categoria:", error);
       alert('Erro ao salvar a categoria');
     }
-  };
+  }; 
 
 
   return (
