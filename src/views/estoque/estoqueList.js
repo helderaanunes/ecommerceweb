@@ -17,47 +17,22 @@ import { cilPencil, cilTrash } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
 const EstoqueList = () => {
-<<<<<<< HEAD
   const [estoque, setEstoque] = useState([])
   const [loading, setLoading] = useState(true)
-=======
-  const [estoque, setEstoque] = useState([]);
-  const [loading, setLoading] = useState(true);
->>>>>>> 4938e257756e50ca13fc2f95af377cacf46abe9c
 
   useEffect(() => {
     const fetchEstoque = async () => {
       try {
-<<<<<<< HEAD
         const response = await fetch('http://localhost:8080/categoria')
         const data = await response.json()
         setEstoque(data)
       } catch (error) {
         console.error('Erro ao busca:', error)
-=======
-        const response = await fetch('http://localhost:8080/categoria');
-        const data = await response.json();
-        setEstoque(data);
-      } catch (error) {
-        console.error('Erro ao buscar estoque:', error);
->>>>>>> 4938e257756e50ca13fc2f95af377cacf46abe9c
       } finally {
         setLoading(false)
       }
     }
 
-<<<<<<< HEAD
-    fetchEstoque()
-  }, [])
-
-  const handleEdit = (id) => {
-    // Lógica para editar a categoria
-    console.log('Editando estoque com id:', id)
-  }
-
-  const handleDelete = async (id) => {
-    if (window.confirm('Você tem certeza que deseja remover este produto?')) {
-=======
     fetchEstoque();
   }, []);
 
@@ -68,21 +43,14 @@ const EstoqueList = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm('Você tem certeza que deseja remover este prouduto do estoque?')) {
->>>>>>> 4938e257756e50ca13fc2f95af377cacf46abe9c
       try {
         await fetch(`http://localhost:8080/estoque/${id}`, {
           method: 'DELETE',
         })
         // Atualizar o estado para remover a categoria
-<<<<<<< HEAD
-        setEstoque((prevEstoque) => prevEstoque.filter((estoque) => estoque.id !== id))
-      } catch (error) {
-        console.error('Erro ao remover:', error)
-=======
         setEstoque((prevEstoque) => prevEstoque.filter((estoque) => estoque.id !== id));
       } catch (error) {
         console.error('Erro ao remover produto do estoque:', error);
->>>>>>> 4938e257756e50ca13fc2f95af377cacf46abe9c
       }
     }
   }
@@ -104,11 +72,8 @@ const EstoqueList = () => {
                 <CTableRow>
                   <CTableHeaderCell scope="col">ID</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Nome</CTableHeaderCell>
-<<<<<<< HEAD
                   <CTableHeaderCell scope="col">Estoque</CTableHeaderCell>
-=======
                   <CTableHeaderCell scope="col">Estoque Pai</CTableHeaderCell>
->>>>>>> 4938e257756e50ca13fc2f95af377cacf46abe9c
                   <CTableHeaderCell scope="col">Ações</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -148,8 +113,5 @@ const EstoqueList = () => {
   )
 }
 
-<<<<<<< HEAD
-export default EstoqueList
-=======
+
 export default EstoqueList;
->>>>>>> 4938e257756e50ca13fc2f95af377cacf46abe9c

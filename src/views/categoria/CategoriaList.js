@@ -31,7 +31,7 @@ const CategoriaList = () => {
 
   const navigate = useNavigate();
 
-  
+
 
   const fetchCategorias = async () => {
     try {
