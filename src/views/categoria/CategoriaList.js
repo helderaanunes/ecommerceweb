@@ -23,52 +23,52 @@ import { cilPencil, cilTrash } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import api from '../../services/axiosConfig';
 
-const CategoriaList = () => {
-  const [categorias, setCategorias] = useState([]);
+const EstoqueList = () => {
+  const [estoques, setEstoques] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
+  const [estoqueSelecionada, setEstoqueSelecionada] = useState(null);
 
   const navigate = useNavigate();
 
 
 
-  const fetchCategorias = async () => {
+  const fetchEstoques = async () => {
     try {
-      const response = await api.get('/categoria');
+      const response = await api.get('/estoque');
       const data = Array.isArray(response.data) ? response.data : [];
-      setCategorias(data);
+      setEstoques(data);
     } catch (error) {
-      console.error('Erro ao buscar categorias:', error);
-      setCategorias([]);
+      console.error('Erro ao buscar estoques:', error);
+      setEstoques([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCategorias();
+    fetchEstoques();
   }, []);
 
   const handleEdit = (id) => {
-    navigate(`/categoria/add?id=${id}`);
+    navigate(`/estoque/add?id=${id}`);
   };
 
-  const handleConfirmDelete = (categoria) => {
-    setCategoriaSelecionada(categoria);
+  const handleConfirmDelete = (estoque) => {
+    setEstoqueSelecionado(estoque);
     setModalVisible(true);
   };
 
   const handleDelete = async () => {
-    if (categoriaSelecionada) {
+    if (estoqueSelecionada) {
       try {
-        await api.delete(`/categoria/${categoriaSelecionada.id}`);
+        await api.delete(`/estoque/${estoqueSelecionada.id}`);
         setModalVisible(false);
-        setCategoriaSelecionada(null);
-        // Recarregar todas as categorias para garantir que a tabela esteja atualizada
-        fetchCategorias();
+        setEstoqueSelecionada(null);
+        // Recarregar todos os estoques para garantir que a tabela esteja atualizada
+        fetchEstoques();
       } catch (error) {
-        console.error('Erro ao remover categoria:', error);
+        console.error('Erro ao remover estoque:', error);
       }
     }
   };
@@ -82,30 +82,37 @@ const CategoriaList = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Categorias</strong>
+            <strong>Estoques</strong>
           </CCardHeader>
           <CCardBody>
             <CTable hover>
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Nome</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Categoria Pai</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Ações</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Logradouro</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Numero</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Complemento</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Bairro</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Cidade</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">uf</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">cep</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Cliente</CTableHeaderCell>
+
+
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {categorias.map((categoria) => (
-                  <CTableRow key={categoria.id}>
-                    <CTableHeaderCell scope="row">{categoria.id}</CTableHeaderCell>
-                    <CTableDataCell>{categoria.nome}</CTableDataCell>
+                {estoques.map((estoque) => (
+                  <CTableRow key={estoque.id}>
+                    <CTableHeaderCell scope="row">{estoque.id}</CTableHeaderCell>
+                    <CTableDataCell>{estoque.nome}</CTableDataCell>
                     <CTableDataCell>
-                      {categoria.categoria ? categoria.categoria.nome : 'N/A'}
+                      {estoque.estoque ? estoque.estoque.nome : 'N/A'}
                     </CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         color="warning"
-                        onClick={() => handleEdit(categoria.id)}
+                        onClick={() => handleEdit(estoque.id)}
                         className="me-2"
                         style={{ color: 'white' }}
                       >
@@ -113,7 +120,7 @@ const CategoriaList = () => {
                       </CButton>
                       <CButton
                         color="danger"
-                        onClick={() => handleConfirmDelete(categoria)}
+                        onClick={() => handleConfirmDelete(estoque)}
                         style={{ color: 'white' }}
                       >
                         <CIcon icon={cilTrash} /> Remover
@@ -133,7 +140,7 @@ const CategoriaList = () => {
           <CModalTitle>Confirmar Exclusão</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          Tem certeza de que deseja remover a categoria "<strong>{categoriaSelecionada?.nome}</strong>"?
+          Tem certeza de que deseja remover o estoque "<strong>{estoqueSelecionada?.nome}</strong>"?
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={() => setModalVisible(false)}>
@@ -148,4 +155,4 @@ const CategoriaList = () => {
   );
 };
 
-export default CategoriaList;
+export default EstoqueList;
