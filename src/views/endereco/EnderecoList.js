@@ -1,4 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+  CButton,
+} from '@coreui/react';
+import { cilPencil, cilTrash } from '@coreui/icons';
+import CIcon from '@coreui/icons-react';
 
 function EnderecoList({ enderecos, onEdit, onDelete }) {
   return (
