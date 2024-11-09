@@ -23,52 +23,52 @@ import { cilPencil, cilTrash } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import api from '../../services/axiosConfig';
 
-const EstoqueList = () => {
-  const [estoques, setEstoques] = useState([]);
+const CategoriaList = () => {
+  const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const [estoqueSelecionada, setEstoqueSelecionada] = useState(null);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
 
   const navigate = useNavigate();
 
 
 
-  const fetchEstoques = async () => {
+  const fetchCategorias = async () => {
     try {
-      const response = await api.get('/estoque');
+      const response = await api.get('/categoria');
       const data = Array.isArray(response.data) ? response.data : [];
-      setEstoques(data);
+      setCategorias(data);
     } catch (error) {
-      console.error('Erro ao buscar estoques:', error);
-      setEstoques([]);
+      console.error('Erro ao buscar categorias:', error);
+      setCategorias([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchEstoques();
+    fetchCategorias();
   }, []);
 
   const handleEdit = (id) => {
-    navigate(`/estoque/add?id=${id}`);
+    navigate(`/categoria/add?id=${id}`);
   };
 
-  const handleConfirmDelete = (estoque) => {
-    setEstoqueSelecionado(estoque);
+  const handleConfirmDelete = (categoria) => {
+    setCategoriaSelecionada(categoria);
     setModalVisible(true);
   };
 
   const handleDelete = async () => {
-    if (estoqueSelecionada) {
+    if (categoriaSelecionada) {
       try {
-        await api.delete(`/estoque/${estoqueSelecionada.id}`);
+        await api.delete(`/categoria/${categoriaSelecionada.id}`);
         setModalVisible(false);
-        setEstoqueSelecionada(null);
-        // Recarregar todos os estoques para garantir que a tabela esteja atualizada
-        fetchEstoques();
+        setCategoriaSelecionada(null);
+        // Recarregar todos os categorias para garantir que a tabela esteja atualizada
+        fetchCategorias();
       } catch (error) {
-        console.error('Erro ao remover estoque:', error);
+        console.error('Erro ao remover categoria:', error);
       }
     }
   };
@@ -82,7 +82,7 @@ const EstoqueList = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Estoques</strong>
+            <strong>Categorias</strong>
           </CCardHeader>
           <CCardBody>
             <CTable hover>
@@ -102,17 +102,17 @@ const EstoqueList = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {estoques.map((estoque) => (
-                  <CTableRow key={estoque.id}>
-                    <CTableHeaderCell scope="row">{estoque.id}</CTableHeaderCell>
-                    <CTableDataCell>{estoque.nome}</CTableDataCell>
+                {categorias.map((categoria) => (
+                  <CTableRow key={categoria.id}>
+                    <CTableHeaderCell scope="row">{categoria.id}</CTableHeaderCell>
+                    <CTableDataCell>{categoria.nome}</CTableDataCell>
                     <CTableDataCell>
-                      {estoque.estoque ? estoque.estoque.nome : 'N/A'}
+                      {categoria.categoria ? categoria.categoria.nome : 'N/A'}
                     </CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         color="warning"
-                        onClick={() => handleEdit(estoque.id)}
+                        onClick={() => handleEdit(categoria.id)}
                         className="me-2"
                         style={{ color: 'white' }}
                       >
@@ -120,7 +120,7 @@ const EstoqueList = () => {
                       </CButton>
                       <CButton
                         color="danger"
-                        onClick={() => handleConfirmDelete(estoque)}
+                        onClick={() => handleConfirmDelete(categoria)}
                         style={{ color: 'white' }}
                       >
                         <CIcon icon={cilTrash} /> Remover
@@ -140,7 +140,7 @@ const EstoqueList = () => {
           <CModalTitle>Confirmar Exclusão</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          Tem certeza de que deseja remover o estoque "<strong>{estoqueSelecionada?.nome}</strong>"?
+          Tem certeza de que deseja remover o categoria "<strong>{categoriaSelecionada?.nome}</strong>"?
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={() => setModalVisible(false)}>
@@ -155,4 +155,4 @@ const EstoqueList = () => {
   );
 };
 
-export default EstoqueList;
+export default CategoriaList;
