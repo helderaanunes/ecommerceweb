@@ -37,7 +37,7 @@ const EstoqueList = () => {
   }, []);
 
   const handleEdit = (id) => {
-    // Lógica para editar a categoria
+    // Lógica para editar o estoque
     console.log('Editando Estoque com id:', id);
   };
 
@@ -47,7 +47,7 @@ const EstoqueList = () => {
         await fetch(`http://localhost:8080/estoque/${id}`, {
           method: 'DELETE',
         })
-        // Atualizar o estado para remover a categoria
+        // Atualizar o estado para remover o estoque
         setEstoque((prevEstoque) => prevEstoque.filter((estoque) => estoque.id !== id));
       } catch (error) {
         console.error('Erro ao remover produto do estoque:', error);
