@@ -18,7 +18,7 @@ import { useLocation } from 'react-router-dom';
 
 const CartaoAdd = () => {
   const [nome, setNome] = useState('');
-  const [numero, setNumero] = useState('');
+  const [numeroCartao, setnumeroCartao] = useState('');
   const [dataValidade, setDataValidade] = useState('');
   const [cvc, setCvc] = useState('');
   const [cliente, setCliente] = useState(''); // Agora é um único cliente
@@ -47,9 +47,9 @@ const CartaoAdd = () => {
       const fetchCartao = async () => {
         try {
           const response = await api.get(`/cartao/${cartaoId}`);
-          const { nome, numero, validade, cvc, cliente } = response.data;
+          const { nome, numeroCartao, validade, cvc, cliente } = response.data;
           setNome(nome);
-          setNumero(numero);
+          setnumeroCartao(numeroCartao);
           setDataValidade(validade);
           setCvc(cvc);
           setCliente(cliente ? cliente.id : ''); // Assumindo que cliente é um objeto com o ID
@@ -65,7 +65,7 @@ const CartaoAdd = () => {
   const handleSave = async (e) => {
     e.preventDefault();
 
-    const cartaoData = {nome, numero, validade: dataValidade, cvc, cliente: cliente ? { id: cliente } : null, // Relacionando com o cliente
+    const cartaoData = {nome, numeroCartao, validade: dataValidade, cvc, cliente: cliente ? { id: cliente } : null, // Relacionando com o cliente
     };
 
     try {
@@ -78,7 +78,7 @@ const CartaoAdd = () => {
       }
       setModalVisible(true); // Exibe o modal de sucesso
       setNome('');
-      setNumero('');
+      setnumeroCartao('');
       setDataValidade('');
       setCvc('');
       setCliente('');
@@ -105,12 +105,12 @@ const CartaoAdd = () => {
               />
             </div>
             <div className="mb-3">
-              <CFormLabel htmlFor="numero">Número do Cartão</CFormLabel>
+              <CFormLabel htmlFor="numeroCartao">Número do Cartão</CFormLabel>
               <CFormInput
                 type="text"
-                id="numero"
-                value={numero}
-                onChange={(e) => setNumero(e.target.value)}
+                id="numeroCartao"
+                value={numeroCartao}
+                onChange={(e) => setnumeroCartao(e.target.value)}
                 required
               />
             </div>
