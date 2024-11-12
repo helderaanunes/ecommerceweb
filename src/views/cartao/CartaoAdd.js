@@ -18,10 +18,11 @@ import { useLocation } from 'react-router-dom';
 
 const CartaoAdd = () => {
   const [nome, setNome] = useState('');
-  const [numeroCartao, setnumeroCartao] = useState('');
+  const [numeroCartao, setNumeroCartao] = useState('');
   const [dataValidade, setDataValidade] = useState('');
   const [cvc, setCvc] = useState('');
-  const [cliente, setCliente] = useState(''); // Agora é um único cliente
+  const [clientes, setClientes] = useState([]); // Agora é um array de clientes
+  const [cliente, setCliente] = useState(''); // Cliente selecionado
   const [modalVisible, setModalVisible] = useState(false);
   const location = useLocation();
 
@@ -33,9 +34,9 @@ const CartaoAdd = () => {
     const fetchCliente = async () => {
       try {
         const response = await api.get('/cliente');
-        setCliente(response.data); // Agora o estado é um único cliente
+        setClientes(response.data); // Agora o estado é um array de clientes
       } catch (error) {
-        console.error("Erro ao buscar cliente:", error);
+        console.error("Erro ao buscar clientes:", error);
       }
     };
     fetchCliente();
@@ -49,7 +50,7 @@ const CartaoAdd = () => {
           const response = await api.get(`/cartao/${cartaoId}`);
           const { nome, numeroCartao, validade, cvc, cliente } = response.data;
           setNome(nome);
-          setnumeroCartao(numeroCartao);
+          setNumeroCartao(numeroCartao);
           setDataValidade(validade);
           setCvc(cvc);
           setCliente(cliente ? cliente.id : ''); // Assumindo que cliente é um objeto com o ID
@@ -65,7 +66,12 @@ const CartaoAdd = () => {
   const handleSave = async (e) => {
     e.preventDefault();
 
-    const cartaoData = {nome, numeroCartao, validade: dataValidade, cvc, cliente: cliente ? { id: cliente } : null, // Relacionando com o cliente
+    const cartaoData = {
+      nome,
+      numeroCartao,
+      validade: dataValidade,
+      cvc,
+      cliente: cliente ? { id: cliente } : null, // Relacionando com o cliente
     };
 
     try {
@@ -78,10 +84,10 @@ const CartaoAdd = () => {
       }
       setModalVisible(true); // Exibe o modal de sucesso
       setNome('');
-      setnumeroCartao('');
+      setNumeroCartao('');
       setDataValidade('');
       setCvc('');
-      setCliente('');
+      setCliente(''); // Limpar o cliente selecionado
     } catch (error) {
       console.error("Erro ao salvar o cartão:", error);
       alert('Erro ao salvar o cartão');
@@ -110,7 +116,7 @@ const CartaoAdd = () => {
                 type="text"
                 id="numeroCartao"
                 value={numeroCartao}
-                onChange={(e) => setnumeroCartao(e.target.value)}
+                onChange={(e) => setNumeroCartao(e.target.value)}
                 required
               />
             </div>
@@ -139,14 +145,14 @@ const CartaoAdd = () => {
               <CFormSelect
                 id="cliente"
                 value={cliente}
-                onChange={(e) => setCliente(e.target.value)}
+                onChange={(e) => setCliente(e.target.value)} // Mudou para 'setCliente' para alterar o cliente selecionado
               >
                 <option value="">Selecione um Cliente</option>
-                {cliente && (
+                {clientes.map((cliente) => (
                   <option key={cliente.id} value={cliente.id}>
                     {cliente.nome}
                   </option>
-                )}
+                ))}
               </CFormSelect>
             </div>
             <CButton type="submit" color="primary">Salvar</CButton>
