@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import {
   CButton,
   CCard,
@@ -14,102 +13,89 @@ import {
   CModalTitle,
   CFormSelect,
 } from '@coreui/react';
-import api from '../../services/axiosConfig.js';
+import api from '../../services/axiosConfig';
 import { useLocation } from 'react-router-dom';
 
 const CartaoAdd = () => {
-  const [numeroCartao, setnumeroCartao] = useState('');
-  const [dataValidade, setdataValidade] = useState([]);  // Alterado de categorias para cartoes
-  const [cvv, setcvv] = useState(''); // Alterado de categoriaPai para cartaoPai
-  const [nomeCliente, setnomeCliente] = useState(''); // Alterado de categoriaPai para cartaoPai
+  const [nome, setNome] = useState('');
+  const [numero, setNumero] = useState('');
+  const [dataValidade, setDataValidade] = useState('');
+  const [cvc, setCvc] = useState('');
+  const [cliente, setCliente] = useState(''); // Agora é um único cliente
   const [modalVisible, setModalVisible] = useState(false);
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
-  const cartaoId = searchParams.get('id');  // Alterado de categoriaId para cartaoId
+  const cartaoId = searchParams.get('id'); // Obtém o ID do cartão, caso haja
 
+  // Carregar a lista de clientes
   useEffect(() => {
-    // Busca todos os cartões para popular o select
-    const fetchCartoes = async () => {
+    const fetchCliente = async () => {
       try {
-        const response = await api.get('/cartao');  // Alterado de /categoria para /cartao
-        setCartoes(response.data);
+        const response = await api.get('/cliente');
+        setCliente(response.data); // Agora o estado é um único cliente
       } catch (error) {
-        console.error("Erro ao buscar cartões:", error);
+        console.error("Erro ao buscar cliente:", error);
       }
     };
-    fetchCartoes();
+    fetchCliente();
   }, []);
 
-
+  // Carregar os dados do cartão para edição, caso haja um ID
   useEffect(() => {
     if (cartaoId) {
       const fetchCartao = async () => {
         try {
-          const response = await api.get(`/cartao/${cartaoId}`);  // Alterado de /categoria para /cartao
-          const { nome, cartao } = response.data;
+          const response = await api.get(`/cartao/${cartaoId}`);
+          const { nome, numero, validade, cvc, cliente } = response.data;
           setNome(nome);
-          setCartaoPai(cartao ? cartao.id : '');
+          setNumero(numero);
+          setDataValidade(validade);
+          setCvc(cvc);
+          setCliente(cliente ? cliente.id : ''); // Assumindo que cliente é um objeto com o ID
         } catch (error) {
-          console.error("Erro ao carregar cartão:", error);
+          console.error("Erro ao carregar os dados do cartão:", error);
         }
       };
       fetchCartao();
     }
   }, [cartaoId]);
 
-
+  // Função para salvar ou editar o cartão
   const handleSave = async (e) => {
     e.preventDefault();
 
-    const cartaoData = { nome, cartao: cartaoPai ? { id: nome } : null };
+    const cartaoData = {nome, numero, validade: dataValidade, cvc, cliente: cliente ? { id: cliente } : null, // Relacionando com o cliente
+    };
 
     try {
       if (cartaoId) {
         // Editar cartão existente
-        await api.put(`/cartao/${cartaoId}`, cartaoData);  // Alterado de /categoria para /cartao
+        await api.put(`/cartao/${cartaoId}`, cartaoData);
       } else {
         // Adicionar novo cartão
-        await api.post('/cartao', cartaoData);  // Alterado de /categoria para /cartao
+        await api.post('/cartao', cartaoData);
       }
-      setModalVisible(true);
+      setModalVisible(true); // Exibe o modal de sucesso
       setNome('');
-      setCartaoPai('');
+      setNumero('');
+      setDataValidade('');
+      setCvc('');
+      setCliente('');
     } catch (error) {
       console.error("Erro ao salvar o cartão:", error);
       alert('Erro ao salvar o cartão');
     }
   };
 
-
   return (
     <>
       <CCard>
         <CCardBody>
-          <h4>Adicionar Cartão</h4>  {/* Alterado de "Adicionar Categoria" para "Adicionar Cartão" */}
+          <h4>{cartaoId ? 'Editar Cartão' : 'Adicionar Cartão'}</h4>
           <CForm onSubmit={handleSave}>
             <div className="mb-3">
-              <CFormLabel htmlFor="nomeCartao">Numero do cartão</CFormLabel>  {/* Alterado de nomeCategoria para nomeCartao */}
-              <CFormInput
-                type="text"
-                id="nomeCartao"
-                value={nomeCliente}
-                onChange={(e) => setNome(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="nomeCartao">Data de Validade</CFormLabel>  {/* Alterado de nomeCategoria para nomeCartao */}
-              <CFormInput
-                type="text"
-                id="nomeCartao"
-                value={nomeCliente}
-                onChange={(e) => setNome(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="nomeCartao">CVV</CFormLabel>  {/* Alterado de nomeCategoria para nomeCartao */}
+              <CFormLabel htmlFor="nomeCartao">Nome do Cartão</CFormLabel>
               <CFormInput
                 type="text"
                 id="nomeCartao"
@@ -119,18 +105,48 @@ const CartaoAdd = () => {
               />
             </div>
             <div className="mb-3">
-              <CFormLabel htmlFor="cartaoPai">Nome do cliente</CFormLabel>  {/* Alterado de categoriaPai para cartaoPai */}
+              <CFormLabel htmlFor="numero">Número do Cartão</CFormLabel>
+              <CFormInput
+                type="text"
+                id="numero"
+                value={numero}
+                onChange={(e) => setNumero(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="validade">Data de Validade</CFormLabel>
+              <CFormInput
+                type="date"
+                id="validade"
+                value={dataValidade}
+                onChange={(e) => setDataValidade(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="cvc">CVC</CFormLabel>
+              <CFormInput
+                type="text"
+                id="cvc"
+                value={cvc}
+                onChange={(e) => setCvc(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="cliente">Cliente</CFormLabel>
               <CFormSelect
-                id="cartaoPai"
-                value={cartaoPai}
+                id="cliente"
+                value={cliente}
                 onChange={(e) => setCliente(e.target.value)}
               >
-                <option value="">Selecione um Cartão Pai</option>
-                {clientes.map((cliente) => (  // Alterado de categorias para cartoes
+                <option value="">Selecione um Cliente</option>
+                {cliente && (
                   <option key={cliente.id} value={cliente.id}>
                     {cliente.nome}
                   </option>
-                ))}
+                )}
               </CFormSelect>
             </div>
             <CButton type="submit" color="primary">Salvar</CButton>
@@ -143,7 +159,7 @@ const CartaoAdd = () => {
         <CModalHeader>
           <CModalTitle>Sucesso</CModalTitle>
         </CModalHeader>
-        <CModalBody>Cartão salvo com sucesso!</CModalBody>  {/* Alterado de Categoria para Cartão */}
+        <CModalBody>Cartão salvo com sucesso!</CModalBody>
         <CModalFooter>
           <CButton color="primary" onClick={() => setModalVisible(false)}>
             Fechar
@@ -154,4 +170,4 @@ const CartaoAdd = () => {
   );
 };
 
-export default CartaoAdd;  {/* Alterado de CategoriaAdd para CartaoAdd */}
+export default CartaoAdd;
