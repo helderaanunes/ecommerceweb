@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import {
   CCard,
   CCardBody,
@@ -20,8 +22,10 @@ const EstoqueList = () => {
   const [estoques, setEstoque] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchEstoque = async () => {
+  const navigate = useNavigate();
+
+
+    const fetchEstoques = async () => {
       try {
         const response = await api.get('http://localhost:8080/estoque')
         const data = await response.data
@@ -33,12 +37,13 @@ const EstoqueList = () => {
       }
     }
 
-    fetchEstoque();
+  useEffect(() => {
+    fetchEstoques();
   }, []);
 
   const handleEdit = (id) => {
     // Lógica para editar o estoque
-    console.log('Editando Estoque com id:', id);
+    navigate(`/estoque/add?id=${id}`);
   };
 
   const handleDelete = async (id) => {
