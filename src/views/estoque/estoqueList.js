@@ -15,19 +15,19 @@ import {
 } from '@coreui/react'
 import { cilPencil, cilTrash } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-
+import api from '../../services/axiosConfig';
 const EstoqueList = () => {
-  const [estoque, setEstoque] = useState([])
+  const [estoques, setEstoque] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchEstoque = async () => {
       try {
-        const response = await fetch('http://localhost:8080/categoria')
-        const data = await response.json()
+        const response = await api.get('http://localhost:8080/estoque')
+        const data = await response.data
         setEstoque(data)
       } catch (error) {
-        console.error('Erro ao busca:', error)
+        console.error("Erro ao busca:", error);
       } finally {
         setLoading(false)
       }
@@ -72,13 +72,17 @@ const EstoqueList = () => {
                 <CTableRow>
                   <CTableHeaderCell scope="col">ID</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Nome</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Estoque</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Estoque Pai</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Ações</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">numero</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">complemento</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">bairro</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">cidade</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">uf</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">cep</CTableHeaderCell>
+
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {estoque.map((estoque) => (
+                {estoques.map((estoque) => (
                   <CTableRow key={estoque.id}>
                     <CTableHeaderCell scope="row">{estoque.id}</CTableHeaderCell>
                     <CTableDataCell>{estoque.nome}</CTableDataCell>

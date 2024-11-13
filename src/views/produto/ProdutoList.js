@@ -22,6 +22,8 @@ import {
 import { cilPencil, cilTrash } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import api from '../../services/axiosConfig';
+import ProdutoChart from './ProdutoChart.js';
+
 
 const ProdutoList = () => {
   const [produtos, setProdutos] = useState([]);
@@ -79,6 +81,7 @@ const ProdutoList = () => {
 
   return (
     <CRow>
+      <ProdutoChart></ProdutoChart>
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
