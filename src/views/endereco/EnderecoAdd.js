@@ -1,5 +1,3 @@
-enderecoAdd.jv
-
 import React, { useState, useEffect } from 'react';
 import {
   CButton,
@@ -26,9 +24,11 @@ const EnderecoAdd = () => {
   const [cidade, setCidade] = useState('');
   const [uf, setUf] = useState('');
   const [cep, setCep] = useState('');
+  const [clienteId, setClienteId] = useState('');
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const enderecoId = searchParams.get('id');
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (enderecoId) {
@@ -43,6 +43,7 @@ const EnderecoAdd = () => {
           setCidade(cidade);
           setUf(uf);
           setCep(cep);
+          setClienteId(cliente);
         } catch (error) {
           console.error("Erro ao buscar endereços:", error);
         }
@@ -60,6 +61,7 @@ const EnderecoAdd = () => {
       cidade,
       uf,
       cep,
+      cliente: clienteId,
     };
     try {
       if (enderecoId) {
@@ -85,6 +87,7 @@ const EnderecoAdd = () => {
     setCidade('');
     setUf('');
     setCep('');
+    setClienteId('');
   }
 
 
@@ -122,7 +125,13 @@ const EnderecoAdd = () => {
                 value={complemento}
                 onChange={(e) => setComplemento(e.target.value)}
                 required
-              />
+                >
+                <option value="">Selecione</option>
+                <option value="Apto">Apto</option>
+                <option value="Casa">Casa</option>
+                <option value="Sala">Sala</option>
+              </CFormSelect>
+            
             </div>
             <div className="mb-3">
               <CFormLabel htmlFor="bairroEndereco">bairro</CFormLabel>
