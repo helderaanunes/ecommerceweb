@@ -106,7 +106,7 @@ const UsuarioList = () => {
                     <CTableDataCell>{usuario.nome}</CTableDataCell>
                     <CTableDataCell>{usuario.rg}</CTableDataCell>
                     <CTableDataCell>{usuario.telefone}</CTableDataCell>
-                    <CTableDataCell>{usuario.permissao}</CTableDataCell>
+                    <CTableDataCell>{usuario.permissao?.nome}</CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         color="warning"
