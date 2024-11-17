@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   CCard,
   CCardBody,
@@ -26,57 +26,55 @@ import ProdutoChart from './ProdutoChart.js';
 
 
 const ProdutoList = () => {
-  const [produtos, setProdutos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const [produtos, setProdutos] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null)
 
-  const navigate = useNavigate();
-
-
+  const navigate = useNavigate()
 
   const fetchProdutos = async () => {
     try {
-      const response = await api.get('/produto');
-      const data = Array.isArray(response.data) ? response.data : [];
-      setProdutos(data);
+      const response = await api.get('/produto')
+      const data = Array.isArray(response.data) ? response.data : []
+      setProdutos(data)
     } catch (error) {
-      console.error('Erro ao buscar produto:', error);
-      setProdutos([]);
+      console.error('Erro ao buscar produto:', error)
+      setProdutos([])
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchProdutos();
-  }, []);
+    fetchProdutos()
+  }, [])
 
   const handleEdit = (id) => {
-    navigate(`/produto/add?id=${id}`);
-  };
+    navigate(`/produto/add?id=${id}`)
+  }
 
   const handleConfirmDelete = (produto) => {
-    setProdutoSelecionada(produto);
-    setModalVisible(true);
-  };
+    setProdutoSelecionado(produto)
+    setModalVisible(true)
+  }
 
   const handleDelete = async () => {
     if (produtoSelecionado) {
       try {
-        await api.delete(`/produto/${produtoSelecionado.id}`);
-        setModalVisible(false);
-        setProdutoSelecionada(null);
+        await api.delete(`/produto/${produtoSelecionado.id}`)
+        setModalVisible(false)
+        setProdutoSelecionado(null)
         // Recarregar todas as produtos para garantir que a tabela esteja atualizada
-        fetchProdutos();
+        fetchProdutos()
       } catch (error) {
-        console.error('Erro ao remover produto:', error);
+        console.error('Erro ao remover produto:', error)
       }
     }
-  };
+  }
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return <div>Carregando...</div>
   }
 
   return (
@@ -93,7 +91,9 @@ const ProdutoList = () => {
                 <CTableRow>
                   <CTableHeaderCell scope="col">ID</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Nome</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Produto Pai</CTableHeaderCell>
+                  {/* <CTableHeaderCell scope="col">Descrição</CTableHeaderCell> */}
+                  <CTableHeaderCell scope="col">Categoria</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Ficha Técnica</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Ações</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -101,9 +101,13 @@ const ProdutoList = () => {
                 {produtos.map((produto) => (
                   <CTableRow key={produto.id}>
                     <CTableHeaderCell scope="row">{produto.id}</CTableHeaderCell>
-                    <CTableDataCell>{produto.nome}</CTableDataCell>
-                    <CTableDataCell>
-                      {produto.produto ? produto.produto.nome : 'N/A'}
+                    <CTableDataCell style={{ maxWidth: '15ch' }}>{produto.nome}</CTableDataCell>
+                    {/* <CTableDataCell>{produto.descricao}</CTableDataCell> */}
+                    <CTableDataCell style={{ maxWidth: '15ch' }}>
+                      {produto.categoria?.nome}
+                    </CTableDataCell>
+                    <CTableDataCell style={{ maxWidth: '20ch' }}>
+                      {produto.fichaTecnica}
                     </CTableDataCell>
                     <CTableDataCell>
                       <CButton
@@ -136,7 +140,8 @@ const ProdutoList = () => {
           <CModalTitle>Confirmar Exclusão</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          Tem certeza de que deseja remover a produto "<strong>{produtoSelecionado?.nome}</strong>"?
+          Tem certeza de que deseja remover a produto &quot;
+          <strong>{produtoSelecionado?.nome}</strong>&quot;?
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={() => setModalVisible(false)}>
@@ -148,7 +153,7 @@ const ProdutoList = () => {
         </CModalFooter>
       </CModal>
     </CRow>
-  );
-};
+  )
+}
 
-export default ProdutoList;
+export default ProdutoList
