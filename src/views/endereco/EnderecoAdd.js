@@ -65,10 +65,9 @@ const EnderecoAdd = () => {
     };
     try {
       if (enderecoId) {
-        // Editar endereço existente
+    
         await api.put(`/endereco/${enderecoId}`, enderecoData);
       } else {
-        // Adicionar novo endereço
         await api.post('/endereco', enderecoData);
       }
       setModalVisible(true);
@@ -127,9 +126,8 @@ const EnderecoAdd = () => {
                 required
                 >
                 <option value="">Selecione</option>
-                <option value="Apto">Apto</option>
                 <option value="Casa">Casa</option>
-                <option value="Sala">Sala</option>
+                <option value="Apartamento">Apartamento</option>
               </CFormSelect>
             
             </div>
@@ -178,7 +176,6 @@ const EnderecoAdd = () => {
         </CCardBody>
       </CCard>
 
-      {/* Modal de Confirmação */}
       <CModal visible={modalVisible} onClose={() => setModalVisible(false)}>
         <CModalHeader>
           <CModalTitle>Sucesso</CModalTitle>
