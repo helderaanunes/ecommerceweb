@@ -133,7 +133,7 @@ const EnderecoAdd = () => {
             </div>
             <div className="mb-3">
               <CFormLabel htmlFor="bairroEndereco">bairro</CFormLabel>
-              <CFormSelect
+              <CFormInput
                 type="text"
                 id="bairro"
                 value={bairro}
@@ -143,7 +143,7 @@ const EnderecoAdd = () => {
             </div>
             <div className="mb-3">
               <CFormLabel htmlFor="cidadeEndereco">cidade</CFormLabel>
-              <CFormSelect
+               <CFormInput
                 type="text"
                 id="cidade"
                 value={cidade}
@@ -153,7 +153,7 @@ const EnderecoAdd = () => {
             </div>
             <div className="mb-3">
               <CFormLabel htmlFor="ufEndereco">uf</CFormLabel>
-              <CFormSelect
+               <CFormInput
                 type="text"
                 id="uf"
                 value={uf}
@@ -163,7 +163,7 @@ const EnderecoAdd = () => {
             </div>
             <div className="mb-3">
               <CFormLabel htmlFor="cepEndereco">cep</CFormLabel>
-              <CFormSelect
+               <CFormInput
                 type="text"
                 id="cep"
                 value={cep}
